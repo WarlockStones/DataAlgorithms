@@ -18,6 +18,16 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\data_algorithms.cpp" />
+    <ClCompile Include="src\ItemManager.cpp" />
+    <ClCompile Include="src\Search.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Item.h" />
+    <ClInclude Include="src\ItemManager.h" />
+    <ClInclude Include="src\Search.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -126,16 +136,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="data_algorithms.cpp" />
-    <ClCompile Include="ItemManager.cpp" />
-    <ClCompile Include="Search.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="ItemManager.h" />
-    <ClInclude Include="Search.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
