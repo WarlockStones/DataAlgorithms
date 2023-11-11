@@ -5,6 +5,9 @@
 class ItemManager
 {
 public:
+	// Populate item values according to index. Because sorting is slow
+	void PopulateItemsInOrder(Item* array, const int MAX_SIZE);
+
 	// Generate random items for an Item array
 	void GenerateItems(Item* array, const int MAX_SIZE);
 

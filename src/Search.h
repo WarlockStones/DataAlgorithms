@@ -1,6 +1,8 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
+#include <iostream>
+
 class Search
 {
 public:
@@ -32,7 +34,10 @@ T Search::BinarySearch(T array, T begin, T end, Val searchValue)
 			return &array[mid];
 	}
 
+	// End is past-the-last element. It will be garbage data. Compare != End
 	return end; // Failure
 }
+
+
 
 #endif
