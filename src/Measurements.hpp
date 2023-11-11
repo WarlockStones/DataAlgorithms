@@ -2,6 +2,7 @@
 #define MEASUREMENTS_H
 #include "Search.h"
 #include "ItemManager.h"
+#include <algorithm>
 #include <vector>
 #include <chrono>
 #include <limits>
@@ -37,7 +38,7 @@ public:
             ++i;
             totalTime += result;
 	}
-        // TODO: Get Highest. Lowest. Average. Median
+        // TODO: Change to ms because it is easier to understand?
         auto average = totalTime/i;
         auto averageNs = std::chrono::duration_cast<std::chrono::nanoseconds>(average);
         auto median = results[i/2];
@@ -71,11 +72,10 @@ public:
 
         for (int i = 0; i < 10; ++i){
 	    auto start{ std::chrono::steady_clock::now() }; // Physical time, not CPU time
-	    auto find = 
-                search.BinarySearch<int*, std::uint32_t>(goldArray,
-		  					 &goldArray[10],
-							 &goldArray[240],
-                                                         toFind);
+
+	    auto find = search.BinarySearch<int*, std::uint32_t>(goldArray, &goldArray[0], &goldArray[255], toFind);
+            // auto find = search.BinarySearchLowBound(&goldArray[0], &goldArray[255], toFind);
+            // auto find = std::binary_search(&goldArray[0], &goldArray[255], toFind); // Returns a bool
 	    auto end{ std::chrono::steady_clock::now()};
 
             results.push_back(end-start);
