@@ -1,19 +1,26 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
+#include <iostream>
+
 class Search
 {
 public:
-	// TODO: Return a bool like std::binary_search?
 	// Binary search inspired by standard library's use of iterators
-	template<typename T, typename Val>
-	T BinarySearch(T array, T begin, T end, Val searchValue);
+	template<typename Iter, typename Val>
+	Iter BinarySearch(Iter array, Iter begin, Iter end, Val searchValue);
+
+        // Binary search using std::lower_bound
+	template<typename Iter, typename Val>
+	Iter BinarySearchLowBound(Iter begin, Iter end, Val searchValue);
+
+        // std::binary_search(begin, end, value);
 };
 
 
 // TODO: Can i compare chars? Can I compare Items if I overload the == operator?
-template <typename T,  typename Val>
-T Search::BinarySearch(T array, T begin, T end, Val searchValue)
+template <typename Iter,  typename Val>
+Iter Search::BinarySearch(Iter array, Iter begin, Iter end, Val searchValue)
 {
 	// Get index number from pointer
 	auto beginIndex = begin - &array[0]; 
@@ -32,7 +39,21 @@ T Search::BinarySearch(T array, T begin, T end, Val searchValue)
 			return &array[mid];
 	}
 
+	// End is past-the-last element. It will be garbage data. Compare != End
 	return end; // Failure
 }
+
+
+template<typename Iter, typename Val>
+Iter Search::BinarySearchLowBound(Iter begin, Iter end, Val searchValue) {
+    Iter i = std::lower_bound(begin, end, searchValue);
+
+    if( i != end && !(searchValue < *i ))
+        return i;
+    else 
+        return end;
+}
+
+
 
 #endif

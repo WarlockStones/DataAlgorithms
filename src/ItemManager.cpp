@@ -2,6 +2,20 @@
 #include <random>
 #include <iostream>
 
+void ItemManager::PopulateItemsInOrder(Item* array, const int MAX_SIZE){
+    for (int i = 0; i < MAX_SIZE; ++i) // C-loop to use index
+    {
+      array[i].goldValue = i;
+
+      std::string name = "MyAwesomeItem_";
+      name += std::to_string(i);
+      array[i].name = name;
+
+      array[i].weight = i;
+    }
+}
+
+// Randomly generate items
 void ItemManager::GenerateItems(Item* array, const int MAX_SIZE)
 {
 	// C-random
@@ -11,12 +25,12 @@ void ItemManager::GenerateItems(Item* array, const int MAX_SIZE)
 	{
 		array[i].goldValue = rand() % 100;
 
-		/*
-			std::string name = "MyAwesomeItem_";
-			name += std::to_string(rand() % 100);
-			array[i].name = name;
-			*/
+		std::string name = "MyAwesomeItem_";
+		name += std::to_string(rand() % 100);
+		array[i].name = name;
 
+
+		/*
 		std::mt19937 gen{std::random_device{}()};
 		std::uniform_int_distribution<int> distribution{'a', 'z'};
 		int stringLength = 6;
@@ -29,6 +43,8 @@ void ItemManager::GenerateItems(Item* array, const int MAX_SIZE)
 		std::string name = "MyAwesomeItem_";
 		name += randStr;
 		array[i].name = name;
+		*/
+
 
 		array[i].weight = rand() % 100;
 	}
