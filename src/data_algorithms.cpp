@@ -3,26 +3,36 @@
 
 int main()
 {
-    // Measurements measure;
-    // measure.MeasureBinarySearch();
+	// Measurements measure;
+	// measure.MeasureBinarySearch();
 
-    Tree tree;
+	Tree tree;
 
-	tree.InsertValue(80);
-	tree.InsertValue(13);
-	tree.InsertValue(15);
-	tree.InsertValue(12);
+  // https://en.wikipedia.org/wiki/File:Binary_search_tree.svg 
+  /*
+           8
+         /   \
+        3     10
+       / \      \
+      1   6      14
+         / \    /
+        4   7  13
+  */
+	tree.InsertValue(8); // Root
 
-	tree.TraverseInOrder();
+  // Right sub-nodes
+  tree.InsertValue(10);
+  tree.InsertValue(14);
+  tree.InsertValue(13);
 
-	tree.Delete();
-	tree.TraverseInOrder();
+  // Left sub-nodes
+  tree.InsertValue(3);
+  tree.InsertValue(1);
+  tree.InsertValue(6);
+  tree.InsertValue(4);
+  tree.InsertValue(7);
 
-	tree.InsertValue(2);
-	tree.InsertValue(1);
-	tree.InsertValue(3);
+  tree.TraverseBreadthFirst();
 
-	tree.TraverseInOrder();
-
-    return 0;
+	return 0;
 }
