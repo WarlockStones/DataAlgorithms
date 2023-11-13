@@ -25,6 +25,11 @@ void Tree::TraverseInOrder()
 	TraverseInOrder(root);
 }
 
+void Tree::Delete()
+{
+	Delete(root);
+}
+
 // Private where we actually do the insertion
 void Tree::InsertValue(Node* node, int value)
 {
@@ -53,3 +58,46 @@ void Tree::TraverseInOrder(Node* node)
 		TraverseInOrder(node->rightChild);
 }
 
+// Delete all nodes
+void Tree::Delete(Node* node)
+{
+	// It is the parent's responsibility to delete the child if it is a leaf.
+	if (node->leftChild && node->leftChild->IsLeaf())
+	{
+		std::cout << "Deleting child node with value: " << node->leftChild->value<<'\n';
+		delete node->leftChild;
+		node->leftChild = nullptr;
+	}
+	if (node->rightChild && node->rightChild->IsLeaf())
+	{
+		std::cout << "Deleting child node with value: " << node->rightChild->value<<'\n';
+		delete node->rightChild;
+		node->rightChild = nullptr;
+	}
+
+	// Recursively go deeper into the tree
+	// TODO: Clean this code up. These checks seems a bit redundant but it works!
+	if(node->leftChild)
+	{
+		// Go try to delete leftChild
+		Delete(node->leftChild);
+		return;
+	}
+	if(node->rightChild)
+	{
+		// Go try to delete rightChild
+		Delete(node->rightChild);
+		return;
+	}
+
+	if (node == root)
+	{
+		std::cout << "Deleting the final root node that has value "<<node->value<<'\n';
+		delete node;
+		root = nullptr; // So that we can re-create the tree. And have no dangling pointers!
+		return; // Stop the recursion
+	}
+
+	// We have no children. Restart recursion
+	Delete(root);
+}

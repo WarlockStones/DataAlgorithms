@@ -1,7 +1,8 @@
 #ifndef NODE_H
 #define NODE_H
 
-struct Node {
+class Node {
+public:
 	// In C++, to use the same class (ex. Node in Node) it must be a pointer. Else it will complain "Class is incomplete"
 	Node* leftChild = nullptr;
 	Node* rightChild = nullptr;
@@ -11,6 +12,9 @@ struct Node {
 		this->value = _value;
 	}
 	~Node() = default;
+
+	// Check if this node does not have any children
+	bool IsLeaf();
 };
 
 #endif
