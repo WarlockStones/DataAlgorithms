@@ -7,14 +7,15 @@ public:
 	Node* leftChild = nullptr;
 	Node* rightChild = nullptr;
 	int value{};
+
+	// Check if this node does not have any children
+	bool IsLeaf();
+
 	Node(int _value)
 	{
 		this->value = _value;
 	}
 	~Node() = default;
-
-	// Check if this node does not have any children
-	bool IsLeaf();
 };
 
 #endif

@@ -62,7 +62,7 @@ void Tree::TraverseInOrder(Node* node)
 
 void Tree::Delete(Node* node)
 {
-	// It is the parent's responsibility to delete the child if it is a leaf
+	// It is the parent's responsibility to delete the child if it is a leaf.
 	if (node->leftChild)
 	{
 		if (node->leftChild->IsLeaf())

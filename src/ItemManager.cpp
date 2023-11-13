@@ -2,17 +2,18 @@
 #include <random>
 #include <iostream>
 
-void ItemManager::PopulateItemsInOrder(Item* array, const int MAX_SIZE){
-    for (int i = 0; i < MAX_SIZE; ++i) // C-loop to use index
-    {
-      array[i].goldValue = i;
+void ItemManager::PopulateItemsInOrder(Item* array, const int MAX_SIZE)
+{
+	for (int i = 0; i < MAX_SIZE; ++i) // C-loop to use index
+	{
+		array[i].goldValue = i;
 
-      std::string name = "MyAwesomeItem_";
-      name += std::to_string(i);
-      array[i].name = name;
+		std::string name = "MyAwesomeItem_";
+		name += std::to_string(i);
+		array[i].name = name;
 
-      array[i].weight = i;
-    }
+		array[i].weight = i;
+	}
 }
 
 // Randomly generate items

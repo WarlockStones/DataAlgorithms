@@ -7,23 +7,23 @@ class Search
 {
 public:
 	// Binary search inspired by standard library's use of iterators
-	template<typename Iter, typename Val>
+	template <typename Iter, typename Val>
 	Iter BinarySearch(Iter array, Iter begin, Iter end, Val searchValue);
 
-        // Binary search using std::lower_bound
-	template<typename Iter, typename Val>
+	// Binary search using std::lower_bound
+	template <typename Iter, typename Val>
 	Iter BinarySearchLowBound(Iter begin, Iter end, Val searchValue);
 
-        // std::binary_search(begin, end, value);
+	// std::binary_search(begin, end, value);
 };
 
 
 // TODO: Can i compare chars? Can I compare Items if I overload the == operator?
-template <typename Iter,  typename Val>
+template <typename Iter, typename Val>
 Iter Search::BinarySearch(Iter array, Iter begin, Iter end, Val searchValue)
 {
 	// Get index number from pointer
-	auto beginIndex = begin - &array[0]; 
+	auto beginIndex = begin - &array[0];
 	auto endIndex = end - &array[0];
 	Val min = beginIndex;
 	Val max = endIndex;
@@ -44,16 +44,15 @@ Iter Search::BinarySearch(Iter array, Iter begin, Iter end, Val searchValue)
 }
 
 
-template<typename Iter, typename Val>
-Iter Search::BinarySearchLowBound(Iter begin, Iter end, Val searchValue) {
-    Iter i = std::lower_bound(begin, end, searchValue);
+template <typename Iter, typename Val>
+Iter Search::BinarySearchLowBound(Iter begin, Iter end, Val searchValue)
+{
+	Iter i = std::lower_bound(begin, end, searchValue);
 
-    if( i != end && !(searchValue < *i ))
-        return i;
-    else 
-        return end;
+	if (i != end && !(searchValue < *i))
+		return i;
+	return end;
 }
-
 
 
 #endif
