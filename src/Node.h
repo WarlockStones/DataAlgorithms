@@ -3,7 +3,7 @@
 
 class Node {
 public:
-	// In C++, to use the same class (ex. Node in Node) it must be a pointer. Else it will complain "Class is incomplete"
+	// To use the same class (ex. Node in Node) it must be a pointer. Else it will complain "Class is incomplete"
 	Node* leftChild = nullptr;
 	Node* rightChild = nullptr;
 	int value{};

@@ -14,6 +14,7 @@ void Tree::InsertValue(int value)
 	}
 	InsertValue(root, value);
 }
+
 // Public that starts the recursion at root
 void Tree::TraverseInOrder()
 {
@@ -25,6 +26,7 @@ void Tree::TraverseInOrder()
 	TraverseInOrder(root);
 }
 
+// Delete all nodes
 void Tree::Delete()
 {
 	Delete(root);
@@ -53,51 +55,51 @@ void Tree::TraverseInOrder(Node* node)
 {
 	if (node->leftChild)
 		TraverseInOrder(node->leftChild);
-	std::cout << node->value << '\n'; // visit this node
+	std::cout << node->value << '\n'; // Visit this node
 	if (node->rightChild)
 		TraverseInOrder(node->rightChild);
 }
 
-// Delete all nodes
 void Tree::Delete(Node* node)
 {
-	// It is the parent's responsibility to delete the child if it is a leaf.
-	if (node->leftChild && node->leftChild->IsLeaf())
+	// It is the parent's responsibility to delete the child if it is a leaf
+	if (node->leftChild)
 	{
-		std::cout << "Deleting child node with value: " << node->leftChild->value<<'\n';
-		delete node->leftChild;
-		node->leftChild = nullptr;
+		if (node->leftChild->IsLeaf())
+		{
+			std::cout << "Deleting child node with value: " << node->leftChild->value << '\n';
+			delete node->leftChild;
+			node->leftChild = nullptr;
+		}
+		else
+		{
+			Delete(node->leftChild); // Go and try to delete the left child
+			return;
+		}
 	}
-	if (node->rightChild && node->rightChild->IsLeaf())
+	if (node->rightChild)
 	{
-		std::cout << "Deleting child node with value: " << node->rightChild->value<<'\n';
-		delete node->rightChild;
-		node->rightChild = nullptr;
-	}
-
-	// Recursively go deeper into the tree
-	// TODO: Clean this code up. These checks seems a bit redundant but it works!
-	if(node->leftChild)
-	{
-		// Go try to delete leftChild
-		Delete(node->leftChild);
-		return;
-	}
-	if(node->rightChild)
-	{
-		// Go try to delete rightChild
-		Delete(node->rightChild);
-		return;
+		if (node->rightChild->IsLeaf())
+		{
+			std::cout << "Deleting child node with value: " << node->rightChild->value << '\n';
+			delete node->rightChild;
+			node->rightChild = nullptr;
+		}
+		else
+		{
+			Delete(node->rightChild); // Go an try to delete the right child
+			return;
+		}
 	}
 
 	if (node == root)
 	{
-		std::cout << "Deleting the final root node that has value "<<node->value<<'\n';
+		std::cout << "Deleting the final root with value: " << node->value << '\n';
 		delete node;
 		root = nullptr; // So that we can re-create the tree. And have no dangling pointers!
 		return; // Stop the recursion
 	}
 
-	// We have no children. Restart recursion
+	// We have no children. Restart recursion again from root
 	Delete(root);
 }

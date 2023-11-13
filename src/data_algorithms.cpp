@@ -18,5 +18,13 @@ int main()
 
 	tree.Delete();
 
+	tree.TraverseInOrder();
+
+	tree.InsertValue(11);
+	tree.InsertValue(12);
+	tree.InsertValue(13);
+
+	tree.TraverseInOrder();
+
     return 0;
 }
