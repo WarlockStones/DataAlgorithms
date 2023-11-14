@@ -38,7 +38,7 @@ void Tree::InsertValue(Node* node, int value)
 {
 	if (value <= node->value)
 	{
-    // std::cout<<"Insert: "<<value<<" <= "<<node->value<<". Go left\n";
+		// std::cout<<"Insert: "<<value<<" <= "<<node->value<<". Go left\n";
 		if (node->leftChild)
 			InsertValue(node->leftChild, value);
 		else
@@ -46,7 +46,7 @@ void Tree::InsertValue(Node* node, int value)
 	}
 	else
 	{
-    // std::cout<<"Insert: "<<value<<" >= "<<node->value<<". Go right\n";
+		// std::cout<<"Insert: "<<value<<" >= "<<node->value<<". Go right\n";
 		if (node->rightChild)
 			InsertValue(node->rightChild, value);
 		else
@@ -64,35 +64,41 @@ void Tree::TraverseInOrder(const Node* node)
 }
 
 // Search all at the same level before continuing on to children
-void Tree::TraverseBreadthFirst(){
-/* Each iteration requires keeping track of which nodes were found on each 
- * level (usually a queue). */
+void Tree::TraverseBreadthFirst()
+{
+	/* Each iteration requires keeping track of which nodes were found on each 
+	 * level (usually a queue). */
 
 	// Traverse and print the whole level of nodes before going to children
-	if (root == nullptr){
-		std::cout<<"The tree is empty. There is nothing to traverse.\n";
+	if (root == nullptr)
+	{
+		std::cout << "The tree is empty. There is nothing to traverse.\n";
 		return;
 	}
 
 	std::queue<Node*> queue;
-  
-  queue.push(root);
-  
-  // TODO: Add some sort of visual element. Maybe just when a level is done
-  while (!queue.empty()) {
-    Node* temp = queue.front(); // First thing added. Pos 1 in queue
-    std::cout<<queue.front()->value<<'\n';
-    queue.pop();
-    
-    if (temp->leftChild != nullptr){
+
+	queue.push(root);
+
+	// TODO: Add some sort of visual element. Maybe just when a level is done
+	// This algorithm can also be used for a search function, instead of print check if is target
+	while (!queue.empty())
+	{
+		Node* temp = queue.front(); // First thing added. Pos 1 in queue
+		std::cout << queue.front()->value << '\n'; // Visit the node
+		queue.pop();
+
+		if (temp->leftChild != nullptr)
+		{
 			queue.push(temp->leftChild);
 		}
-		if (temp->rightChild != nullptr) {
+		if (temp->rightChild != nullptr)
+		{
 			queue.push(temp->rightChild);
 		}
 	}
 
-	std::cout<<"Traverse Breadth First is done!\n";
+	std::cout << "Traverse Breadth First is done!\n";
 }
 
 void Tree::Delete(Node* node)

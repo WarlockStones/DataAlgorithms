@@ -11,7 +11,7 @@ class Tree {
 public:
 	void InsertValue(int value);
 	void TraverseInOrder();
-  void TraverseBreadthFirst();
+	void TraverseBreadthFirst();
 	void Delete();
 private:
 	Node* root = nullptr;
