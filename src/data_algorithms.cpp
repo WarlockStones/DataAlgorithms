@@ -11,7 +11,14 @@ int main()
 	/* Graph */
 	Graph graph;
 	graph.InitializeGraphFromFile("../data/GraphNodes.txt");
-	graph.DepthFirstTraversal();
+	std::cout<<"Start Graph Depth First Traversal\n";
+	// graph.DepthFirstTraversal();
+  // BUG: Segmentation Fault on searching for ID that is higher than the highest ID
+	std::cout<<"Breadth first search for ID----------\n";
+	graph.BreadthFirstSearch(100);
+  Vector2 v(8,0);
+	std::cout<<"Breadth first search for pos----------\n";
+	graph.BreadthFirstSearch(v);
 
 	return 0; // --------------------------------------------------------------
 	Tree tree;

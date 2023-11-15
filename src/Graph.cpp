@@ -27,6 +27,7 @@ void Graph::InitializeGraphFromFile(const char* path){
 					// What to do with data management? At the moment I just allocated onto the heap.
 					GraphNode* gNode = new GraphNode({ xPos, yPos }, graphNodeIds);
 					nodes.push_back(*gNode);
+					++graphNodeIds;
 				}
 				++xPos;
 			}
@@ -118,12 +119,10 @@ void Graph::MakeNeighbors(GraphNode* n1, GraphNode* n2)
 	{
 		if (neighbor == n1)
 		{
-			// They are neighbors just return
 			return;
 		}
 	}
 
-	// n1 and n2 are not neighbors. Make them neighbors
 	n1->neighbors.push_back(n2);
 	n2->neighbors.push_back(n1);
 }
@@ -131,19 +130,89 @@ void Graph::MakeNeighbors(GraphNode* n1, GraphNode* n2)
 void Graph::DepthFirstTraversal()
 {
 	// Here I initialize a vector which I then pass as a reference.
-	// QUESTION: When will the the stack memory be de-allocated? What is the life-time of the object?
-	std::vector<int> discoveredNodeIDs;
+	// QUESTION: When will the the stack memory be de-allocated? What is the life-time of the vector?
+	std::unordered_set<int> discoveredNodeIDs;
 	DepthFirstTraversal(nodes[0], discoveredNodeIDs);
 }
 
 
 
-static int testInt = 0;
-void Graph::DepthFirstTraversal(GraphNode& node, std::vector<int>& discoveredNodeIDs)
+void Graph::DepthFirstTraversal(GraphNode& node, std::unordered_set<int>& discoveredNodeIDs)
 {
-	discoveredNodeIDs.push_back(node.id); // Test!
-	testInt++;
-	std::cout << testInt<<' ';
-	if (testInt >= nodes.size()) return;
-	DepthFirstTraversal(nodes[testInt],discoveredNodeIDs);
+	discoveredNodeIDs.insert(node.id);
+
+	std::cout<<node.id<<' ';// Visit node
+
+	for (auto neighbor : node.neighbors) {
+		if (auto search = discoveredNodeIDs.find(neighbor->id); search != discoveredNodeIDs.end()) {
+		} else {
+			DepthFirstTraversal(*neighbor, discoveredNodeIDs);
+		}
+	}
+}
+
+static int breadthIterations = 0;
+void Graph::BreadthFirstSearch(int id) {
+	std::vector<GraphNode*> nodesToVisit;
+	std::unordered_set<int> visitedIDs;
+	nodesToVisit.push_back(&nodes.front());
+
+	breadthIterations = 0;
+	BreadthFirstSearch(nodesToVisit, visitedIDs, id);
+}
+
+void Graph::BreadthFirstSearch(Vector2 pos) {
+	std::vector<GraphNode*> nodesToVisit;
+	std::unordered_set<int> visitedIDs;
+	nodesToVisit.push_back(&nodes.front());
+
+	breadthIterations = 0;
+	BreadthFirstSearch(nodesToVisit, visitedIDs, pos);
+}
+
+void Graph::BreadthFirstSearch(std::vector<GraphNode*>& nodesToVisit, std::unordered_set<int>& visitedIDs, int idToFind) {
+	++breadthIterations;
+	std::vector<GraphNode*> newNodesToVisit;
+	for (auto node : nodesToVisit) {
+		if (node->id == idToFind) {
+			std::cout<<"Found the id("<<node->id<<")! pos: "<<node->position.x<<'.'<<node->position.y<<'\n';
+			std::cout<<"Breadth First Iterations = "<<breadthIterations<<'\n';
+			return;
+		}
+		visitedIDs.insert(node->id);
+
+		for (auto neighbor : node->neighbors) {
+			if (auto search = visitedIDs.find(neighbor->id); search == visitedIDs.end()){
+				// If we have not visited the neighbor
+				newNodesToVisit.push_back(neighbor);
+			}
+		}
+	}
+
+	BreadthFirstSearch(newNodesToVisit, visitedIDs, idToFind);
+}
+
+void Graph::BreadthFirstSearch(std::vector<GraphNode*>& nodesToVisit, std::unordered_set<int>& visitedIDs, Vector2 posToFind) {
+	++breadthIterations;
+	std::vector<GraphNode*> newNodesToVisit;
+	for (auto node : nodesToVisit) {
+		std::cout<<"node pos = "<<node->position.x<<'.'<<node->position.y<<'\n';
+		std::cout<<"pos to find = "<<posToFind.x<<'.'<<posToFind.y<<'\n';
+		if (node->position == posToFind) { // BUG! This comparison is broken...
+			std::cout<<"Found the pos("<<node->position.x<<'.'<<node->position.y<<")! id: "<<node->id<<'\n';
+			std::cout<<"Breadth First Iterations = "<<breadthIterations<<'\n';
+			return;
+		}
+		visitedIDs.insert(node->id);
+
+		for (auto neighbor : node->neighbors) {
+			if (auto search = visitedIDs.find(neighbor->id); search == visitedIDs.end()){
+				// If we have not visited the neighbor
+				newNodesToVisit.push_back(neighbor);
+			}
+		}
+	}
+
+	BreadthFirstSearch(newNodesToVisit, visitedIDs, posToFind);
+	
 }
