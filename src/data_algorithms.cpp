@@ -11,8 +11,9 @@ int main()
 	/* Graph */
 	Graph graph;
 	graph.InitializeGraphFromFile("../data/GraphNodes.txt");
+	graph.DepthFirstTraversal();
 
-	return 0; // -----------------------------------------------------------------
+	return 0; // --------------------------------------------------------------
 	Tree tree;
 
 	/*
