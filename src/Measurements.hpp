@@ -13,8 +13,25 @@
 class Measurements
 {
 public:
-	// Format and print a vector of std::chrono::duration measurement results
-	void PrintResults(std::vector<std::chrono::duration<double>> results)
+	// Remember to clear previous results
+	void StartMeasurement()
+	{
+		// Physical time, not CPU time
+		start = std::chrono::steady_clock::now(); 
+	}
+
+	void EndMeasurement()
+	{
+		end = std::chrono::steady_clock::now();
+		results.push_back(end - start);
+	}
+
+	void ClearResults()
+	{
+		results.clear;
+	}
+
+	void PrintResults()
 	{
 		int i = 0; // index
 		long long lowestNs = std::numeric_limits<long long>::max();
@@ -26,7 +43,7 @@ public:
 		{
 			// Do the comparison in nanoseconds for accuracy's sake
 			auto nanoSec = std::chrono::duration_cast<std::chrono::nanoseconds>(result);
-			 std::cout << "result_" << i << " = " << nanoSec.count() << " ns. | ";
+			std::cout << "result_" << i << " = " << nanoSec.count() << " ns. | ";
 
 			if (nanoSec.count() < lowestNs)
 			{
@@ -73,8 +90,6 @@ public:
 
 		Search search;
 
-		std::vector<std::chrono::duration<double>> results;
-
 		for (int i = 0; i < 10; ++i)
 		{
 			auto start{std::chrono::steady_clock::now()}; // Physical time, not CPU time
@@ -87,14 +102,20 @@ public:
 			results.push_back(end - start);
 		}
 
-		PrintResults(results);
+		PrintResults();
 
 		delete[] items;
 	}
 
 private:
+	std::vector<std::chrono::duration<double>> results{};
+	std::chrono::time_point<std::chrono::steady_clock> start{};
+	std::chrono::time_point<std::chrono::steady_clock> end{};
+
+
 	std::string FormatNanoseconds(long long ns)
 	{
+		// TODO: Convert from long long to double to get a nice 0.00X milliseconds.
 		const std::string milliseconds = std::to_string(ns / 1000000LL);
 		const std::string microseconds = std::to_string(ns / 1000LL);
 
