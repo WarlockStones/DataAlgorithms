@@ -13,24 +13,20 @@
 class Measurements
 {
 public:
+	// Format and print a vector of std::chrono::duration measurement results
 	void PrintResults(std::vector<std::chrono::duration<double>> results)
 	{
 		int i = 0; // index
-		// Conversion from chrono to double bad?
-		double lowestNs = std::numeric_limits<double>::max();
-		double highestNs = std::numeric_limits<double>::min();
+		long long lowestNs = std::numeric_limits<long long>::max();
+		long long highestNs = std::numeric_limits<long long>::min();
 
 		std::chrono::duration<double> totalTime{};
 
 		for (auto result : results)
 		{
-			std::cout << "Result for index_" << i << '\n';
-
-			auto microSec = std::chrono::duration_cast<std::chrono::microseconds>(result);
-			std::cout << microSec.count() << "ms\n";
+			// Do the comparison in nanoseconds for accuracy's sake
 			auto nanoSec = std::chrono::duration_cast<std::chrono::nanoseconds>(result);
-			std::cout << nanoSec.count() << "ns\n";
-			std::cout << '\n';
+			 std::cout << "result_" << i << " = " << nanoSec.count() << " ns. | ";
 
 			if (nanoSec.count() < lowestNs)
 			{
@@ -43,15 +39,17 @@ public:
 			++i;
 			totalTime += result;
 		}
-		// TODO: Change to ms because it is easier to understand?
+		std::cout << '\n';
+
 		auto average = totalTime / i;
-		auto averageNs = std::chrono::duration_cast<std::chrono::nanoseconds>(average);
 		auto median = results[i / 2];
-		auto medianNs = std::chrono::duration_cast<std::chrono::nanoseconds>(median);
-		std::cout << "Highest result = " << highestNs << "ns\n";
-		std::cout << "Lowest  result = " << lowestNs << "ns\n";
-		std::cout << "Average result = " << averageNs.count() << "ns\n";
-		std::cout << "Median  result = " << medianNs.count() << "ns\n";
+		long long averageNs = std::chrono::duration_cast<std::chrono::nanoseconds>(average).count();
+		long long medianNs = std::chrono::duration_cast<std::chrono::nanoseconds>(median).count();
+		std::cout << "Highest = " << FormatNanoseconds(highestNs) << '\n';
+		std::cout << "Lowest  = " << FormatNanoseconds(lowestNs) << '\n';
+		std::cout << "Average = " << FormatNanoseconds(averageNs) << '\n';
+		std::cout << "Median  = " << FormatNanoseconds(medianNs) << '\n';
+		std::cout << '\n';
 	}
 
 	// An ugly function just to archive the code
@@ -92,6 +90,16 @@ public:
 		PrintResults(results);
 
 		delete[] items;
+	}
+
+private:
+	std::string FormatNanoseconds(long long ns)
+	{
+		const std::string milliseconds = std::to_string(ns / 1000000LL);
+		const std::string microseconds = std::to_string(ns / 1000LL);
+
+		std::string s = milliseconds + "ms. " + microseconds + "us. " + std::to_string(ns) + "ns.";
+		return s;
 	}
 };
 
