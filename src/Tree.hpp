@@ -1,6 +1,6 @@
 #ifndef TREE_H
 #define TREE_H
-#include "Node.h"
+#include "Node.hpp"
 // TODO: Add a "Find" function
 
 // Indices seems rather pointless, what is tree[5]? like in what branch even is that? 

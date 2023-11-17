@@ -1,6 +1,6 @@
 #ifndef ITEMMANAGER_H
 #define ITEMMANAGER_H
-#include "Item.h"
+#include "Item.hpp"
 
 class ItemManager
 {

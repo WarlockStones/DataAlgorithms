@@ -1,5 +1,5 @@
 #include "Measurements.hpp"
-#include "Tree.h"
+#include "Tree.hpp"
 #include "Graph.hpp"
 #include "Vector2.hpp"
 #include "Map.hpp"

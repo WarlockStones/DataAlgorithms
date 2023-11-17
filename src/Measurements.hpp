@@ -1,7 +1,7 @@
 #ifndef MEASUREMENTS_H
 #define MEASUREMENTS_H
-#include "Search.h"
-#include "ItemManager.h"
+#include "Search.hpp"
+#include "ItemManager.hpp"
 #include <algorithm>
 #include <vector>
 #include <chrono>

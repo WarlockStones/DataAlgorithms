@@ -4,5 +4,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_BUILD_TYPE Debug)
 Project(DataAlgorithms)
 add_executable(DataAlgorithms 
-	"src/data_algorithms.cpp" "src/ItemManager.cpp"	"src/Search.cpp" "src/Measurements.hpp" "src/Tree.h" "src/Tree.cpp" "src/Node.h" "src/Node.cpp" "src/Graph.cpp" "src/Map.cpp" "src/HashMap.cpp" "src/"
+	"src/EntryPoint.cpp" "src/ItemManager.cpp" "src/Search.cpp" "src/Measurements.hpp" "src/Tree.hpp" "src/Tree.cpp" "src/Node.hpp" "src/Node.cpp" "src/Graph.cpp" "src/Map.cpp" "src/HashMap.cpp" "src/"
  "src/HashMap.cpp")
