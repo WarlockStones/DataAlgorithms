@@ -1,7 +1,7 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
-#include <functional> // std::hash
 
+// This is not really a Vector2 more like a grid
 struct Vector2 {
 	float x{}, y{};
 
@@ -14,12 +14,13 @@ struct Vector2 {
   ~Vector2() = default;
 
 	friend bool operator== (const Vector2& left, const Vector2& right) {
-		if (left.x == right.x || left.y == right.y)
+		if (left.x == right.x && left.y == right.y)
 				return true;
 		return false;
 	}
 };
 
+/*
 template<>
 struct std::hash<Vector2>
 {
@@ -32,5 +33,6 @@ struct std::hash<Vector2>
 	}
 
 };
+*/
 
 #endif

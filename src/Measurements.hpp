@@ -8,8 +8,6 @@
 #include <limits>
 
 // Performance = Measurements
-// An ugly header to do some measurements. Just to archive it
-
 class Measurements
 {
 public:
@@ -28,7 +26,7 @@ public:
 
 	void ClearResults()
 	{
-		results.clear;
+		results.clear();
 	}
 
 	void PrintResults()
@@ -69,7 +67,7 @@ public:
 		std::cout << '\n';
 	}
 
-	// An ugly function just to archive the code
+	// An ugly function just to archive some code. Remove me!
 	void MeasureBinarySearch()
 	{
 		constexpr int toFind = 40;
@@ -84,7 +82,7 @@ public:
 		// Temporary array of just the gold entires for the search
 		int goldArray[MAX_ITEMS];
 		for (int i = 0; i < MAX_ITEMS; ++i)
-		{
+	{
 			goldArray[i] = items[i].goldValue;
 		}
 
