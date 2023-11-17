@@ -22,7 +22,7 @@ void HashMap::Insert(std::string key, std::string value)
 
 std::string HashMap::Lookup(std::string key)
 {
-	int hash = HashFunction(key);
+	const int hash = HashFunction(key);
 	if (entries[hash] == nullptr)
 		return ""; // Instead of return nullptr
 	LinkedListEntry* toCheck = entries[hash];
@@ -30,16 +30,36 @@ std::string HashMap::Lookup(std::string key)
 	{
 		if (toCheck->key == key)
 			return toCheck->value;
+
 		toCheck = toCheck->next;
 	}
 
 	return "";
 }
 
+// TODO: fix Remove to work with the toCheck iteration
+void HashMap::Remove(const std::string& key)
+{
+	const int hash = HashFunction(key);
+	LinkedListEntry* toCheck = entries[hash];
+	while (toCheck != nullptr)
+	{
+		if (toCheck->key == key)
+		{
+			// BUG! Cannot just null entry at hash. Must get to the element that toCheck is! In case it got collided and moved with ->next
+			entries[hash] = nullptr;
+			toCheck = nullptr; // This also just sets this pointer to null. I must get the entries[target] to null
+			return;
+		}
+
+		toCheck = toCheck->next;
+	}
+}
+
 int HashMap::HashFunction(const std::string& key)
 {
 	int hashDigest = 0;
-	for (char c : key)
+	for (const char c : key)
 	{
 		hashDigest += static_cast<int>(c);
 	}

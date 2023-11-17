@@ -6,16 +6,33 @@
 #include "HashMap.hpp"
 
 /* TODO:
- * - Fix and push Graph.
- * - Add CLI graphics for Graph.
- * - Add HashMap Remove function
+ * - Fix HashMap Remove function
  * - Test HashMap Measurements. And against std::unordered_map
+ * - Add CLI graphics for Graph.
  * - GUI: Change the node we find to another character for the console to print. '@'
 	      Or add a PrettyPrint function that shows the iteration. feed it vector of grids to highlight?
  */
 
 int main()
 {
+	/* HashMap */
+
+	// HashMap Remove bug example
+	HashMap hashMap;
+	hashMap.Initialize(4);
+	hashMap.Insert("Hello", "Hej");
+	hashMap.Insert("One", "1");
+	hashMap.Insert("Two", "2");
+	hashMap.Insert("Three", "3");
+	hashMap.Insert("Four", "4");
+	hashMap.Insert("Five", "5");
+	hashMap.Insert("Six", "6");
+	hashMap.Remove("Six");
+	hashMap.Remove("Five");
+	hashMap.Remove("Four");
+
+
+	return 0; // --------------------------------------------------------------
 	/* Graph */
 	Graph graph;
 	graph.InitializeGraphFromFile("../data/GraphNodes.txt");
