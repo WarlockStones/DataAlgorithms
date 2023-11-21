@@ -4,19 +4,31 @@
 #include "Vector2.hpp"
 #include "Map.hpp"
 #include "HashMap.hpp"
+#include "GraphGUI.hpp"
 
 /* TODO:
- * - Fix HashMap Remove function
+ * - Fix HashMap Remove function (or maybe focus on other stuff)
  * - Test HashMap Measurements. And against std::unordered_map
- * - Add CLI graphics for Graph.
- * - GUI: Change the node we find to another character for the console to print. '@'
-	      Or add a PrettyPrint function that shows the iteration. feed it vector of grids to highlight?
+ * - Add A*
+ * - Global shouldPrint bool that we can just toggle instead of uncommenting all lines
  */
 
 int main()
 {
-	/* HashMap */
+	GraphGUI::Initialize("../data/GraphNodes.txt");
+	GraphGUI::ReplaceChar('o', '.');
+	GraphGUI::enabled = true;
+	Graph graph2;
+	graph2.InitializeGraphFromFile("../data/GraphNodes.txt");
+	graph2.DepthFirstTraversal();
+	GraphGUI::PrintLines();
+	graph2.DepthFirstTraversal();
 
+	// AStar astar;
+	// astar.Pathfind(graph2, *s, *e);
+
+	return 0; // --------------------------------------------------------------
+	/* HashMap */
 	// HashMap Remove bug example
 	HashMap hashMap;
 	hashMap.Initialize(4);
@@ -37,7 +49,7 @@ int main()
 	Graph graph;
 	graph.InitializeGraphFromFile("../data/GraphNodes.txt");
 	std::cout << "Start Graph Depth First Traversal\n";
-	graph.DepthFirstTraversalPrint();
+	graph.DepthFirstTraversal();
 	std::cout << '\n';
 
 	std::cout << "--- Breadth first search for ID ---\n";

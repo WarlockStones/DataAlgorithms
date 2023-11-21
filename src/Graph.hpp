@@ -10,11 +10,11 @@ public:
 
 	void InitializeGraphFromFile(const char* path);
 	void MakeNeighbors(GraphNode* n1, GraphNode* n2);
-	void DepthFirstTraversalPrint(); // Print all IDs
+	void DepthFirstTraversal(); // Traverse all nodes depth first
 	GraphNode* BreadthFirstSearch(int id);
 	GraphNode* BreadthFirstSearch(Vector2 pos);
 private:
-	void DepthFirstTraversalPrint(GraphNode& node, std::unordered_set<int>& discoveredNodesIDs);
+	void DepthFirstTraversal(GraphNode& node, std::unordered_set<int>& discoveredNodesIDs);
 };
 
 #endif

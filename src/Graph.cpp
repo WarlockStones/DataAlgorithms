@@ -3,13 +3,15 @@
 #include <fstream>
 #include <iostream>
 
+#include "GraphGUI.hpp"
+
 void Graph::InitializeGraphFromFile(const char* path)
 {
 	// This will not really be a node graph. More like a grid
 	// Parse the text file and create nodes. On 'o' create a node. On 'X' don't do anything
 	int graphNodeIds = 0;
-	float xPos = 0;
-	float yPos = 0;
+	int xPos = 0;
+	int yPos = 0;
 	std::string line;
 	std::ifstream myFile(path);
 	if (myFile.is_open())
@@ -19,7 +21,6 @@ void Graph::InitializeGraphFromFile(const char* path)
 			// Parse and create nodes
 			for (char c : line)
 			{
-				std::cout << c;
 				if (c == 'o')
 				{
 					// What to do with data management? Allocating on the heap is slow?
@@ -32,7 +33,6 @@ void Graph::InitializeGraphFromFile(const char* path)
 			// New line
 			xPos = 0;
 			++yPos;
-			std::cout << '\n';
 		}
 		myFile.close();
 	}
@@ -85,21 +85,19 @@ void Graph::MakeNeighbors(GraphNode* n1, GraphNode* n2)
 	n2->neighbors.push_back(n1);
 }
 
-void Graph::DepthFirstTraversalPrint()
+void Graph::DepthFirstTraversal()
 {
 	// Here I initialize a set which I then pass as a reference.
 	// QUESTION: When will the the stack memory be de-allocated? What is the life-time of the set?
 	std::unordered_set<int> discoveredNodeIDs;
-	DepthFirstTraversalPrint(nodes[0], discoveredNodeIDs);
+	DepthFirstTraversal(nodes[0], discoveredNodeIDs);
 }
 
 
-void Graph::DepthFirstTraversalPrint(GraphNode& node, std::unordered_set<int>& discoveredNodeIDs)
+void Graph::DepthFirstTraversal(GraphNode& node, std::unordered_set<int>& discoveredNodeIDs)
 {
 	discoveredNodeIDs.insert(node.id);
-
-	// TODO: Change to search
-	std::cout << node.id << ' '; // Visit node
+	if (GraphGUI::enabled) GraphGUI::PrintTraversal(node.position); // Is accessing static memory slow?
 
 	for (auto neighbor : node.neighbors)
 	{
@@ -108,7 +106,7 @@ void Graph::DepthFirstTraversalPrint(GraphNode& node, std::unordered_set<int>& d
 		}
 		else
 		{
-			DepthFirstTraversalPrint(*neighbor, discoveredNodeIDs);
+			DepthFirstTraversal(*neighbor, discoveredNodeIDs);
 		}
 	}
 }

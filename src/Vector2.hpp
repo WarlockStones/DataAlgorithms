@@ -1,11 +1,11 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-// This is not really a Vector2 more like a grid
+// This is not really a Vector2 more like a grid. Use int.
 struct Vector2 {
-	float x{}, y{};
+	int x{}, y{};
 
-	Vector2(float x = 0.0f, float y = 0.0f)
+	Vector2(int x = 0.0f, int y = 0.0f)
 	{
 		this->x = x;
 		this->y = y;
