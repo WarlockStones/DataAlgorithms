@@ -1,7 +1,7 @@
 #include "AStar.hpp"
 #include <deque>
 
-/*
+
 std::vector<GraphNode> AStar::ReconstructPath(std::map<GraphNode, GraphNode>& cameFrom, GraphNode& current)
 {
 	std::deque<GraphNode> path; // To add to front we shouldn't use a vector
@@ -10,7 +10,8 @@ std::vector<GraphNode> AStar::ReconstructPath(std::map<GraphNode, GraphNode>& ca
 
 	// CameFrom.KEYS I ONLY NEED KEYS! I must compare KEYS!
 	// Compilation error. GraphNode has no '<' operator
-	cameFrom.contains(current);
+	// cameFrom.contains(current);
+	// cameFrom.find(current);
 
 	// TODO: Lots of copying. Optimize later.
 	std::vector<GraphNode> v;
@@ -21,17 +22,13 @@ std::vector<GraphNode> AStar::ReconstructPath(std::map<GraphNode, GraphNode>& ca
 	}
 	return v;
 }
-*/
 
-/*
 int AStar::Heuristic(GraphNode from)
 {
 	// Manhattan distance
-	return std::abs(from.position.x - goal.position.x) + std::abs(from.position.y - goal.position.y);
+	return std::abs(from.position.x - goal->position.x) + std::abs(from.position.y - goal->position.y);
 }
-*/
 
-/*
 float AStar::D(GraphNode* n1, GraphNode* n2)
 {
 	// Calculate distance between to vectors. But it is a grid, it will all be the same?
@@ -39,10 +36,8 @@ float AStar::D(GraphNode* n1, GraphNode* n2)
 	return std::sqrt(std::pow(n1->position.x - n2->position.x, 2) +
 		std::pow(n1->position.y - n2->position.y, 2));
 }
-*/
 
 // The AStar loop
-/*
 void AStar::Pathfind(Graph graph, GraphNode startNode, GraphNode goalNode)
 {
 	openSet.insert(startNode);
@@ -62,10 +57,10 @@ void AStar::Pathfind(Graph graph, GraphNode startNode, GraphNode goalNode)
 		}
 		openSet.erase(openSet.find(*current));
 
+		// BUG: openSet never get new neighbors to explore
 		for (auto neighbor  : current->neighbors)
 		{
-			// TODO: gScore store pointers instead?
-			// TODO: Fix conversions. Floats or Ints? Pick one.
+			// gScore should store pointers instead?
 			float tentative_gScore = gScore[*current] + D(current, neighbor);
 			if (tentative_gScore < gScore[*neighbor])
 			{
@@ -83,4 +78,3 @@ void AStar::Pathfind(Graph graph, GraphNode startNode, GraphNode goalNode)
 	// OpenSet is empty. We did not find a path. return Failure
 	std::cout << "Could not find any valid paths\n";
 }
-*/

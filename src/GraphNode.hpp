@@ -8,6 +8,7 @@ struct GraphNode{
 	int id{};
 	// Now that it is pointers I must remember them up if I delete a node
 	std::vector<GraphNode*> neighbors{}; // Just do neighborIDs to decouple and then access through a find function?
+	GraphNode() = default;
 	GraphNode(Vector2 _pos, int _id)
 	{
 		this->position = _pos;
@@ -18,6 +19,11 @@ struct GraphNode{
 		if (left.id == right.id)
 				return true;
 		return false;
+	}
+
+	bool operator<(const GraphNode& right) const noexcept
+	{
+		return this->id < right.id;
 	}
 
 };

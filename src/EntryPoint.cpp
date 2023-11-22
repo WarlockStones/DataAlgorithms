@@ -5,12 +5,13 @@
 #include "Map.hpp"
 #include "HashMap.hpp"
 #include "GraphGUI.hpp"
+#include "AStar.hpp"
 
 /* TODO:
  * - Test HashMap Measurements. And against std::unordered_map
  * - Add A*
  * - Update GraphGUI::enabled implementation (Do this before adding more prints)
-
+ * - Clean up all types. Pointers? Reference? Sort out when and where to use what
  * LOW PRIORITY:
  * - Fix HashMap Remove function
  * - Create events for when each traversal is done. (To reset GUI)
@@ -22,15 +23,22 @@ int main()
 
 	GraphGUI::Initialize("../data/GraphNodes.txt");
 	GraphGUI::ReplaceChar('o', '.');
-	Graph graph2;
-	graph2.InitializeGraphFromFile("../data/GraphNodes.txt");
-	graph2.DepthFirstTraversal();
-	GraphGUI::ReplaceChar('o', '.');
-	GraphGUI::PrintLines();
-	graph2.DepthFirstTraversal();
 
-	// AStar astar;
-	// astar.Pathfind(graph2, *s, *e);
+	Graph g;
+	g.InitializeGraphFromFile("../data/GraphNodes.txt");
+	GraphNode* s = g.BreadthFirstSearch({ 1, 0 });
+    GraphNode* e = g.BreadthFirstSearch({ 0, 5 });
+	if (s != nullptr)
+	{
+		std::cout << "S.id = " << s->id << '\n';
+	}
+	if (e != nullptr)
+	{
+		std::cout << "E.id = " << e->id << '\n';
+	}
+
+	AStar astar;
+	astar.Pathfind(g, *s, *e);
 
 	return 0; // --------------------------------------------------------------
 	/* HashMap */

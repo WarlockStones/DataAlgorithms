@@ -10,9 +10,9 @@
 
 class AStar {
 public:
-	AStar();
-
-	GraphNode goal;
+	AStar() = default;
+	~AStar() = default;
+	GraphNode* goal;
 	std::set<GraphNode> openSet; // Discovered nodes
 	std::map<GraphNode, GraphNode> cameFrom; //
 	std::map<GraphNode, int> gScore;
