@@ -66,6 +66,7 @@ void GraphGUI::PrintTraversal(Vector2& tileToHighlight)
 	ReplaceChar(highlightChar, visitedChar);
 	std::string& line = lines[tileToHighlight.y];
 	line[tileToHighlight.x] = highlightChar;
+
 	PrintLines();
 	// Pause and wait for input
 	WaitForInput();
@@ -73,31 +74,37 @@ void GraphGUI::PrintTraversal(Vector2& tileToHighlight)
 
 void GraphGUI::WaitForInput()
 {
-	// TODO: Add timesToSkip logic
 	static std::string str = "";
 	static int timesToSkip = 0;
 	static int skips = 0;
-	std::cout << "Times to skip = " << timesToSkip<<'\n';
+	std::cout << "Times to skip = " << timesToSkip <<". (enter <number> to skip)"<<'\n';
 
-	// Reading each char
-	while (char in = std::cin.get())
+	if (skips < 1)
 	{
-		if (in == '\n') // Break if <enter> is pressed
+		// Pause and read each char
+		while (char in = std::cin.get())
 		{
-			std::cout << str << '\n';
-			if (!str.empty())
+			skips = timesToSkip; // To keep it refreshed each pause
+			if (in == '\n') // Break if <enter> is pressed
 			{
-				timesToSkip = std::stoi(str);
+				std::cout << str << '\n';
+				if (!str.empty())
+				{
+					timesToSkip = std::stoi(str);
+					skips = timesToSkip;
+				}
+				str = "";
+				break;
 			}
-			str = "";
-			break;
+			// If in is number add it to str
+			if (std::isdigit(in))
+			{
+				str += in;
+			}
 		}
-		// If in is number add it to str
-		if (std::isdigit(in))
-		{
-			str += in;
-		}
-		int i = in;
-		std::cout << "CHAR: " << in << "INT: " << i << '\n';
+	}
+	else
+	{
+		--skips;
 	}
 }

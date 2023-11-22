@@ -7,20 +7,25 @@
 #include "GraphGUI.hpp"
 
 /* TODO:
- * - Fix HashMap Remove function (or maybe focus on other stuff)
  * - Test HashMap Measurements. And against std::unordered_map
  * - Add A*
- * - Global shouldPrint bool that we can just toggle instead of uncommenting all lines
+ * - Update GraphGUI::enabled implementation (Do this before adding more prints)
+
+ * LOW PRIORITY:
+ * - Fix HashMap Remove function
+ * - Create events for when each traversal is done. (To reset GUI)
  */
 
 int main()
 {
+	GraphGUI::enabled = true;
+
 	GraphGUI::Initialize("../data/GraphNodes.txt");
 	GraphGUI::ReplaceChar('o', '.');
-	GraphGUI::enabled = true;
 	Graph graph2;
 	graph2.InitializeGraphFromFile("../data/GraphNodes.txt");
 	graph2.DepthFirstTraversal();
+	GraphGUI::ReplaceChar('o', '.');
 	GraphGUI::PrintLines();
 	graph2.DepthFirstTraversal();
 
