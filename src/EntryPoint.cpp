@@ -8,10 +8,9 @@
 #include "AStar.hpp"
 
 /* TODO:
- * - Test HashMap Measurements. And against std::unordered_map
- * - Add A*
- * - Update GraphGUI::enabled implementation (Do this before adding more prints)
  * - Clean up all types. Pointers? Reference? Sort out when and where to use what
+ * - Update GraphGUI::enabled implementation (Do this before adding more prints)
+ * - Add GUI to A*
  * LOW PRIORITY:
  * - Fix HashMap Remove function
  * - Create events for when each traversal is done. (To reset GUI)
@@ -42,7 +41,7 @@ int main()
 
 	return 0; // --------------------------------------------------------------
 	/* HashMap */
-	// HashMap Remove bug example
+	// HashMap Remove bug example. Remove is currently bugged, this demonstrates how
 	HashMap hashMap;
 	hashMap.Initialize(4);
 	hashMap.Insert("Hello", "Hej");
