@@ -2,16 +2,10 @@
 #include <deque>
 
 
-std::vector<GraphNode> AStar::ReconstructPath(std::map<GraphNode, GraphNode>& cameFrom, GraphNode& current)
+std::vector<GraphNode> AStar::ReconstructPath(std::map<GraphNode*, GraphNode*>& cameFrom, GraphNode& current)
 {
 	std::deque<GraphNode> path; // To add to front we shouldn't use a vector
 	path.push_back(current);
-
-
-	// CameFrom.KEYS I ONLY NEED KEYS! I must compare KEYS!
-	// Compilation error. GraphNode has no '<' operator
-	// cameFrom.contains(current);
-	// cameFrom.find(current);
 
 	// TODO: Lots of copying. Optimize later.
 	std::vector<GraphNode> v;
@@ -29,23 +23,24 @@ int AStar::Heuristic(GraphNode from)
 	return std::abs(from.position.x - goal->position.x) + std::abs(from.position.y - goal->position.y);
 }
 
-float AStar::D(GraphNode* n1, GraphNode* n2)
+// GraphNodes are sorted on a grid using integers. The return value will always be an integer
+int AStar::D(GraphNode* n1, GraphNode* n2)
 {
 	// Calculate distance between to vectors. But it is a grid, it will all be the same?
 	// sqrt( (n1.pos.x - n2.pos.x)^2 + (n1.pos.y - n2.pos.y)^2 )
-	return std::sqrt(std::pow(n1->position.x - n2->position.x, 2) +
+	float f =  std::sqrt(std::pow(n1->position.x - n2->position.x, 2) +
 		std::pow(n1->position.y - n2->position.y, 2));
+	std::cout << "AStar::D returned: " << f << '\n';
+	return f;
 }
 
 // The AStar loop
-void AStar::Pathfind(Graph graph, GraphNode startNode, GraphNode goalNode)
+void AStar::Pathfind(Graph& graph, GraphNode& startNode, GraphNode& goalNode)
 {
-	openSet.insert(startNode);
+	openSet.insert(&startNode);
 	while (!openSet.empty())
 	{
-		GraphNode temp = *openSet.begin(); // Unnecessary copying
-		GraphNode* current = &temp;
-		// GraphNode* current = &(*openSet.begin()); // How to initialize non-const value from const value?
+		GraphNode* current = *openSet.begin();
 		if (current->position == goalNode.position) // TODO: Overload ==
 		{
 			std::vector<GraphNode> rPath = ReconstructPath(cameFrom, *current);
@@ -55,21 +50,20 @@ void AStar::Pathfind(Graph graph, GraphNode startNode, GraphNode goalNode)
 				std::cout << node.id << "|pos" << node.position.x << '.' << node.position.y << ' ';
 			}
 		}
-		openSet.erase(openSet.find(*current));
+		openSet.erase(openSet.find(current));
 
 		// BUG: openSet never get new neighbors to explore
 		for (auto neighbor  : current->neighbors)
 		{
-			// gScore should store pointers instead?
-			float tentative_gScore = gScore[*current] + D(current, neighbor);
-			if (tentative_gScore < gScore[*neighbor])
+			int tentative_gScore = gScore[current] + D(current, neighbor);
+			if (tentative_gScore < gScore[neighbor])
 			{
-				cameFrom[*neighbor] = *current;
-				gScore[*neighbor] = tentative_gScore;
-				fScore[*neighbor] = tentative_gScore + Heuristic(*neighbor);
-				if (!openSet.contains(*neighbor))
+				cameFrom[neighbor] = current;
+				gScore[neighbor] = tentative_gScore;
+				fScore[neighbor] = tentative_gScore + Heuristic(*neighbor);
+				if (!openSet.contains(neighbor))
 				{
-					openSet.insert(*neighbor);
+					openSet.insert(neighbor);
 				}
 			}
 		}

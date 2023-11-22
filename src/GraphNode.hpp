@@ -14,18 +14,6 @@ struct GraphNode{
 		this->position = _pos;
 		this->id = _id;
 	}
-
-	friend bool operator== (const GraphNode& left, const GraphNode& right) {
-		if (left.id == right.id)
-				return true;
-		return false;
-	}
-
-	bool operator<(const GraphNode& right) const noexcept
-	{
-		return this->id < right.id;
-	}
-
 };
 
 #endif
