@@ -17,12 +17,13 @@ public:
 	// Print the whole graph
 	static void PrintLines();
 
-	// void PrintHighlight(std::vector<Vector2> targets);
-	// Gui highlight. Maybe just show a single character for a "frame"
+	// Highlight characters for a "frame", before returning to the original characters
+	static void Highlight(std::vector<Vector2>& targets);
 
 	// Highlights current char as @ then when traversing change @ to o
 	static void PrintTraversal(std::vector<Vector2>& tilesToHighlight);
 	static void PrintTraversal(Vector2& tileToHighlight);
+	void Pause();
 
 	inline static bool enabled = true;
 

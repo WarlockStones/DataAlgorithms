@@ -1,6 +1,7 @@
 #include "GraphGUI.hpp"
 #include <fstream>
 #include <iostream>
+#include <map>
 
 /* Initialize the base graph. Adds lines from file to variable graphLines */
 void GraphGUI::Initialize(const char* path)
@@ -51,6 +52,30 @@ void GraphGUI::PrintLines()
 	std::cout << '\n'; // Line-break after whole gui has been printed
 }
 
+void GraphGUI::Highlight(std::vector<Vector2>& targets)
+{
+	// Position and what character it had before highlight
+	std::map<Vector2*, char> original;
+
+	for (auto pos : targets)
+	{
+		std::string& line = lines[pos.y];
+		original.insert(std::make_pair(&pos, line[pos.x]));
+		line[pos.x] = highlightChar;
+	}
+
+	PrintLines();
+	std::cout << "Press any key to continue.";
+	std::cin.get(); // Pause. wait for any key.
+
+	// Return to original characters
+	for (auto value : original)
+	{
+		std::string& line = lines[value.first->y];
+		line[value.first->x] = value.second;
+	}
+}
+
 void GraphGUI::PrintTraversal(std::vector<Vector2>& tilesToHighlight)
 {
 	ReplaceChar(highlightChar, visitedChar);
@@ -72,7 +97,8 @@ void GraphGUI::PrintTraversal(Vector2& tileToHighlight)
 	WaitForInput();
 }
 
-void GraphGUI::WaitForInput()
+
+void GraphGUI::WaitForInput() // TODO: Rename me to something more fitting
 {
 	static std::string str = "";
 	static int timesToSkip = 0;

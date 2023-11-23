@@ -3,6 +3,8 @@
 #include <deque>
 #include <limits>
 
+#include "GraphGUI.hpp"
+
 
 std::deque<GraphNode*> AStar::ReconstructPath(std::map<GraphNode*, GraphNode*>& cameFrom, GraphNode* current)
 {
@@ -49,12 +51,16 @@ void AStar::Pathfind(Graph& graph, GraphNode& startNode, GraphNode& goalNode)
 		GraphNode* current = *openSet.begin();
 		if (current->position == goalNode.position)
 		{
-			//TODO GUI Print Path
 			std::deque<GraphNode*> rPath = ReconstructPath(cameFrom, current);
+
+			// Print traversal
 			std::cout << "Found a path! \n";
+			std::vector<Vector2> startAndGoal{ startNode.position, goalNode.position };
+			GraphGUI::Highlight(startAndGoal);
 			for (auto node : rPath)
 			{
-				std::cout << "id: " << node->id << " | pos: " << node->position.x << '.' << node->position.y << '\n';
+				GraphGUI::PrintTraversal(node->position);
+				// std::cout << "id: " << node->id << " | pos: " << node->position.x << '.' << node->position.y << '\n';
 			}
 			return;
 		}

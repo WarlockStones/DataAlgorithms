@@ -30,9 +30,11 @@ int main()
 		unsortedArray[i] = rand() % 100;
 	}
 
+	/*
 	for (int i : unsortedArray)
 		std::cout << i << ' ';
 	std::cout << '\n';
+	*/
 
 	// Copy array
 	std::cout << "Copy array: \n";
@@ -42,9 +44,11 @@ int main()
 		arrayToSort[i] = unsortedArray[i];
 	}
 
+	/*
 	for (int i = 0; i < 10; ++i)
 		std::cout << arrayToSort[i] << ' ';
 	std::cout << "...\n";
+	*/
 
 	int workingArray[ARR_MAX];
 	Measurements measure;
@@ -119,7 +123,6 @@ int main()
 
 
 	// ASTAR ---------------------------------------------------------------------
-	return 0;
 	GraphGUI::enabled = true;
 
 	GraphGUI::Initialize("../data/GraphNodes.txt");
@@ -128,7 +131,7 @@ int main()
 	Graph g;
 	g.InitializeGraphFromFile("../data/GraphNodes.txt");
 
-	g.DepthFirstTraversal(); 
+	// g.DepthFirstTraversal(); 
 
 	std::cout << "BreadthFirstSearch -----------\n";
 
@@ -144,6 +147,9 @@ int main()
 	}
 
 	std::cout << "Astar -----------\n";
+
+	// Show start and end goals
+
 	AStar astar;
 	astar.Pathfind(g, *s, *e);
 
