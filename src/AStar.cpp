@@ -1,4 +1,5 @@
 #include "AStar.hpp"
+#include <iostream>
 #include <deque>
 #include <limits>
 
@@ -32,7 +33,7 @@ int AStar::D(GraphNode* n1, GraphNode* n2)
 	// sqrt( (n1.pos.x - n2.pos.x)^2 + (n1.pos.y - n2.pos.y)^2 )
 
 	return std::sqrt(std::pow(n1->position.x - n2->position.x, 2) +
-		std::pow(n1->position.y - n2->position.y, 2));
+		/*           */std::pow(n1->position.y - n2->position.y, 2));
 }
 
 // The AStar loop
@@ -46,20 +47,20 @@ void AStar::Pathfind(Graph& graph, GraphNode& startNode, GraphNode& goalNode)
 	while (!openSet.empty())
 	{
 		GraphNode* current = *openSet.begin();
-		if (current->position == goalNode.position) // TODO: Overload ==
+		if (current->position == goalNode.position)
 		{
 			//TODO GUI Print Path
 			std::deque<GraphNode*> rPath = ReconstructPath(cameFrom, current);
 			std::cout << "Found a path! \n";
 			for (auto node : rPath)
 			{
-				std::cout <<"id: "<<node->id << " | pos: " << node->position.x << '.' << node->position.y << '\n';
+				std::cout << "id: " << node->id << " | pos: " << node->position.x << '.' << node->position.y << '\n';
 			}
 			return;
 		}
 		openSet.erase(openSet.find(current));
 
-		for (auto neighbor  : current->neighbors)
+		for (auto neighbor : current->neighbors)
 		{
 			/* Populate the maps */
 			if (!gScore.contains(current))
@@ -80,7 +81,7 @@ void AStar::Pathfind(Graph& graph, GraphNode& startNode, GraphNode& goalNode)
 			}
 
 			int tentative_gScore = gScore[current] + D(current, neighbor);
-			if (tentative_gScore < gScore[neighbor])
+			if (tentative_gScore < gScore[neighbor]) // || neighborGscore == 0. ??
 			{
 				cameFrom[neighbor] = current;
 				gScore[neighbor] = tentative_gScore;
@@ -93,6 +94,6 @@ void AStar::Pathfind(Graph& graph, GraphNode& startNode, GraphNode& goalNode)
 		}
 	}
 
-	// OpenSet is empty. We did not find a path. return Failure
+	// OpenSet is empty. We did not find a path
 	std::cout << "Could not find any valid paths\n";
 }

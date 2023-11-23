@@ -4,9 +4,6 @@
 #include "Graph.hpp"
 #include <map>
 #include <set>
-#include <vector>
-#include <iostream>
-#include <cmath>
 #include <deque>
 
 class AStar {
@@ -16,7 +13,6 @@ public:
 	GraphNode* goal;
 	std::set<GraphNode*> openSet; // Discovered nodes
 	std::map<GraphNode*, GraphNode*> cameFrom; 
-	// TODO: Initialize gScore and fScore default value of infinity
 	std::map<GraphNode*, int> gScore; 
 	std::map<GraphNode*, int> fScore; // From a given node to the goal. To see which nodes to look at next, avoid back-tracing
 
