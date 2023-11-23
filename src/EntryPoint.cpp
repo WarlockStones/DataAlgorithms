@@ -6,6 +6,7 @@
 #include "HashMap.hpp"
 #include "GraphGUI.hpp"
 #include "AStar.hpp"
+#include "Sort.hpp"
 
 /* TODO:
  * - Clean up all types. Pointers? Reference? Sort out when and where to use what
@@ -18,6 +19,107 @@
 
 int main()
 {
+	Sort sort;
+	srand(static_cast<unsigned>(time(nullptr)));
+	const int ARR_MAX = 50000;
+
+	int unsortedArray[ARR_MAX];
+
+	for (int i = 0; i < ARR_MAX; ++i)
+	{
+		unsortedArray[i] = rand() % 100;
+	}
+
+	for (int i : unsortedArray)
+		std::cout << i << ' ';
+	std::cout << '\n';
+
+	// Copy array
+	std::cout << "Copy array: \n";
+	int arrayToSort[ARR_MAX];
+	for (int i = 0; i < ARR_MAX; ++i)
+	{
+		arrayToSort[i] = unsortedArray[i];
+	}
+
+	for (int i = 0; i < 10; ++i)
+		std::cout << arrayToSort[i] << ' ';
+	std::cout << "...\n";
+
+	int workingArray[ARR_MAX];
+	Measurements measure;
+	for (int i = 0; i < 10; ++i)
+	{
+		measure.StartMeasurement();
+		sort.BottomUpMergeSort(arrayToSort, workingArray, ARR_MAX);
+		measure.EndMeasurement();
+
+		// Reset arrays:
+		for (int i = 0; i < ARR_MAX; ++i)
+		{
+			arrayToSort[i] = unsortedArray[i];
+		}
+		for (int i = 0; i < ARR_MAX; ++i)
+		{
+			workingArray[i] = NULL;
+		}
+	}
+	std::cout << "Results for my MergeSort\n";
+	measure.PrintResults();
+	measure.ClearResults();
+
+	std::cout << "'\n '\n Now to test std:: !\n";
+
+	int* pLast = (int*)(&arrayToSort + 1) - 1; // Tested and this works!
+
+	for (int i = 0; i < 10; ++i)
+	{
+		measure.StartMeasurement();
+		// std::stable_sort(arrayToSort, pLast);
+		std::sort(arrayToSort, pLast);
+		measure.EndMeasurement();
+
+		// Reset arrays:
+		for (int i = 0; i < ARR_MAX; ++i)
+		{
+			arrayToSort[i] = unsortedArray[i];
+		}
+		for (int i = 0; i < ARR_MAX; ++i)
+		{
+			workingArray[i] = NULL;
+		}
+	}
+
+	measure.PrintResults();
+	measure.ClearResults();
+
+
+
+
+	// std::sort unstable IntroSort algorithm. Hybrid of Quicksort, Heapsort and Insertion Sort.
+	
+	/*
+	for (int i = 0; i < 10; ++i)
+	{
+		measure.StartMeasurement();
+		std::sort(arrayToSort, arrayToSort + ARR_MAX);
+		measure.EndMeasurement();
+
+		// Reset arrays:
+		for (int i = 0; i < ARR_MAX; ++i)
+		{
+			arrayToSort[i] = unsortedArray[i];
+		}
+		for (int i = 0; i < ARR_MAX; ++i)
+		{
+			workingArray[i] = NULL;
+		}
+	}
+	*/
+
+
+	// ASTAR ---------------------------------------------------------------------
+	return 0;
 	GraphGUI::enabled = true;
 
 	GraphGUI::Initialize("../data/GraphNodes.txt");
@@ -25,8 +127,13 @@ int main()
 
 	Graph g;
 	g.InitializeGraphFromFile("../data/GraphNodes.txt");
+
+	g.DepthFirstTraversal(); 
+
+	std::cout << "BreadthFirstSearch -----------\n";
+
 	GraphNode* s = g.BreadthFirstSearch({ 1, 0 });
-    GraphNode* e = g.BreadthFirstSearch({ 0, 5 });
+    GraphNode* e = g.BreadthFirstSearch({ 7, 6 });
 	if (s != nullptr)
 	{
 		std::cout << "S.id = " << s->id << '\n';
@@ -36,6 +143,7 @@ int main()
 		std::cout << "E.id = " << e->id << '\n';
 	}
 
+	std::cout << "Astar -----------\n";
 	AStar astar;
 	astar.Pathfind(g, *s, *e);
 

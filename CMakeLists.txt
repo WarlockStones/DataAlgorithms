@@ -5,4 +5,4 @@ set(CMAKE_BUILD_TYPE Debug)
 Project(DataAlgorithms)
 add_executable(DataAlgorithms 
 	"src/EntryPoint.cpp" "src/ItemManager.cpp" "src/Search.cpp" "src/Measurements.hpp" "src/Tree.hpp" "src/Tree.cpp" "src/Node.hpp" "src/Node.cpp" "src/Graph.cpp" "src/Map.cpp" "src/HashMap.cpp" "src/"
- "src/HashMap.cpp" "src/GraphGUI.cpp" "src/AStar.cpp")
+ "src/HashMap.cpp" "src/GraphGUI.cpp" "src/AStar.cpp" "src/Sort.cpp")
